@@ -1,4 +1,3 @@
-Drop database Agrarian;
 Create Database Agrarian;
 Use Agrarian;
 Create Table User_data(User_ID int auto_increment, Username varchar(30), User_Type ENUM("Farmer","Mentor","Administaror") NOT NULL default "Farmer", Email varchar(30), Password varchar(300), Phone_Number int,User_Photo varchar(200) default "https://drive.google.com/file/d/1cA9iGU7avgquduBqeiHi78k_WRcMMR17/view?usp=sharing",primary key(User_ID));
