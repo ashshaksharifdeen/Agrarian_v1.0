@@ -1,0 +1,112 @@
+name: dbms_agranrian
+run-name: Setting up the dbms_agrarian
+on: [push]
+jobs:
+  test-output:
+    run-on: ubuntu-latest
+    steps:
+      - name: Test output
+        run: echo "Here is a test"
+
+# database: Agrarian
+
+# tables:
+#   - name: User_data
+#     columns:
+#       - name: User_ID 
+#          type: int
+#         attributes: [auto_increment]
+#       - name: Username
+#         type: varchar(30)
+#       - name: User_Type
+#         type: ENUM("Farmer", "Mentor", "Administrator")
+#         attributes: [NOT NULL, default: "Farmer"]
+#       - name: Email
+#         type: varchar(30)
+#       - name: Password
+#         type: varchar(300)
+#       - name: Phone_Number
+#         type: int
+#       - name: User_Photo
+#         type: varchar(200)
+#         attributes: [default: "https://drive.google.com/file/d/1cA9iGU7avgquduBqeiHi78k_WRcMMR17/view?usp=sharing"]
+#       - name: primary_key
+#         type: primary key
+#         columns: [User_ID]
+
+#   - name: Dataset
+#     columns:
+#       - name: Dataset_ID
+#         type: int
+#         attributes: [auto_increment]
+#       - name: Dataset_Description
+#         type: varchar(100)
+#       - name: GCP_File
+#         type: varchar(150)
+#       - name: User_ID
+#         type: int
+#       - name: Created_Date
+#         type: datetime
+#       - name: primary_key
+#         type: primary key
+#         columns: [Dataset_ID]
+#       - name: foreign_key
+#         type: foreign key
+#         columns: [User_ID]
+#         references: User_data(User_ID)
+
+#   - name: Image
+#     columns:
+#       - name: Image_ID
+#         type: int
+#         attributes: [auto_increment]
+#       - name: Image_link
+#         type: varchar(200)
+#       - name: latitude_m
+#         type: decimal(20, 15)
+#       - name: longitude_m
+#         type: decimal(20, 15)
+#       - name: altitude_m
+#         type: decimal(20, 15)
+#       - name: omega_degree
+#         type: decimal(20, 15)
+#       - name: phi_degree
+#         type: decimal(20, 15)
+#       - name: kappa_degree
+#         type: decimal(20, 15)
+#       - name: Dataset_ID
+#         type: int
+#       - name: primary_key
+#         type: primary key
+#         columns: [Image_ID]
+#       - name: foreign_key
+#         type: foreign key
+#         columns: [Dataset_ID]
+#         references: Dataset(Dataset_ID)
+
+#   - name: Map
+#     columns:
+#       - name: Map_ID
+#         type: int
+#         attributes: [auto_increment]
+#       - name: Map_Type
+#         type: ENUM("Orthomosaic", "3D-Map", "Point-Cloud", "DSM")
+#         attributes: [NOT NULL, default: "Point-cloud"]
+#       - name: Map
+#         type: varchar(100)
+#       - name: Created_Date
+#         type: datetime
+#       - name: Dataset_ID
+#         type: int
+#       - name: primary_key
+#         type: primary key
+#         columns: [Map_ID]
+#       - name: foreign_key
+#         type: foreign key
+#         columns: [Dataset_ID]
+#         references: Dataset(Dataset_ID)
+
+#   - name: Parameter
+#     columns:
+#       - name: Para_ID
+#         type: int
