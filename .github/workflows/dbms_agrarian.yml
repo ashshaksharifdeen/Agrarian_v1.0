@@ -3,7 +3,7 @@ run-name: Setting up the dbms_agrarian
 on: [push]
 jobs:
   test-output:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Test output
         run: echo "Here is a test"
