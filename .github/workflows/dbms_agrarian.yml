@@ -2,19 +2,19 @@ name: dbms_agranrian
 run-name: Setting up the dbms_agrarian
 on: [push]
 jobs:
-  # test-output:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Test output
-  #       run: echo "Here is a test"
-  connect-remote:
+  test-output:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Show databases
-        run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES";
-      - name: Run a sample SQL on remote
-        run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "source Database_Agrarian_V1.0/dbms_agrarian.sql";
+      - name: Test output
+        run: echo "Here is a test"
+  # connect-remote:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Show databases
+  #       run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES";
+  #     - name: Run a sample SQL on remote
+  #       run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "source Database_Agrarian_V1.0/dbms_agrarian.sql";
 
 
 # database: Agrarian
