@@ -10,7 +10,32 @@ import sys
 import random
 from typing import List
 from scipy.spatial.distance import cdist
+from video_foot import index_cal
+from Langchain.promt import prompt_design
 import mysql.connector
+
+# Create a custom colormap with 100 colors
+custom_cmap = ['#8B4513', '#3F3F3F', '#7F7F7F', '#BFBFBF', '#FFFFFF', '#FF0000', '#FFA500', '#FFFF00', '#008000', '#0000FF',
+          '#4B0082', '#9400D3', '#FF00FF', '#00FFFF', '#ADD8E6', '#F08080', '#90EE90', '#D3D3D3', '#FFC0CB', '#00FF00',
+          '#800000', '#FFD700', '#FFA07A', '#7CFC00', '#DC143C', '#00BFFF', '#FF1493', '#FF8C00', '#48D1CC', '#B0C4DE',
+          '#00CED1', '#9400D3', '#FF00FF', '#800080', '#FFC0CB', '#00FF00', '#F0E68C', '#ADFF2F', '#6A5ACD', '#FFE4C4',
+          '#B8860B', '#FA8072', '#87CEFA', '#BA55D3', '#AFEEEE', '#FFDAB9', '#DA70D6', '#FF7F50', '#00FA9A', '#D8BFD8',
+          '#4169E1', '#C71585', '#FF4500', '#FF69B4', '#ADFF2F', '#CD5C5C', '#EEE8AA', '#8A2BE2', '#556B2F', '#FFA07A',
+          '#F5DEB3', '#00FFFF', '#00CED1', '#6B8E23', '#DB7093', '#191970', '#FAEBD7', '#FFB6C1', '#00FA9A', '#8B0000',
+          '#008B8B', '#F08080', '#FF6347', '#008000', '#000080', '#FF8C00', '#9932CC', '#FF69B4', '#8B008B', '#FFA500',
+          '#0000CD', '#800080', '#FFD700', '#98FB98', '#9400D3', '#20B2AA', '#FFE4E1', '#2E8B57', '#FF00FF', '#FF1493',
+          '#FFC0CB', '#4169E1', '#B22222', '#FF4500', '#87CEEB', '#228B22', '#8B4513', '#FA8072', '#4B0082', '#ADD8E6',
+          '#DAA520', '#1E90FF', '#FF69B4', '#9370DB', '#CD853F', '#FFB6C1', '#FAFAD2', '#90EE90', '#808000', '#BA55D3',
+          '#8B0000', '#008080', '#F5DEB3', '#EEE8AA', '#FF7F50', '#00BFFF', '#483D8B', '#FF7F50', '#00BFFF', '#483D8B',
+          '#4169E1', '#C71585', '#FF4500', '#FF69B4', '#ADFF2F', '#CD5C5C', '#EEE8AA', '#8A2BE2', '#556B2F', '#FFA07A',
+          '#F5DEB3', '#00FFFF', '#00CED1', '#6B8E23', '#DB7093', '#191970', '#FAEBD7', '#FFB6C1', '#00FA9A', '#8B0000',
+          '#008B8B', '#F08080', '#FF6347', '#008000', '#000080', '#FF8C00', '#9932CC', '#FF69B4', '#8B008B', '#FFA500',
+          '#0000CD', '#800080', '#FFD700', '#98FB98', '#9400D3', '#20B2AA', '#FFE4E1', '#2E8B57', '#FF00FF', '#FF1493',
+          '#FFC0CB', '#4169E1', '#B22222', '#FF4500', '#87CEEB', '#228B22', '#8B4513', '#FA8072', '#4B0082', '#ADD8E6',
+          '#DAA520', '#1E90FF', '#FF69B4', '#9370DB', '#CD853F', '#FFB6C1', '#FAFAD2', '#90EE90', '#808000', '#BA55D3',
+          '#8B0000', '#008080', '#F5DEB3', '#EEE8AA']
+
+rgb_colors = [plt_colors.to_rgb(hex_color) for hex_color in custom_cmap]
 
 class PointCloud():
     def __init__(self):
@@ -91,24 +116,33 @@ class PointcloudSet():
             #The DBSCAN algorithm is applied to the self.map point cloud using the cluster_dbscan method. The algorithm takes two parameters: eps (epsilon) and min_points. These parameters define the neighborhood size and the minimum number of points required to form a dense region, respectively. The resulting cluster labels are stored in the labels array.
             """            
         labels = np.array(
-                self.map.cluster_dbscan(eps=0.02, min_points=10, print_progress=True))
+                self.map.cluster_dbscan(eps=0.5, min_points=10, print_progress=True))
        # Create a list of segmented point clouds
         # A list called pcd_list is created to store segmented point clouds representing different clusters.
-        pcd_list = []
-        densities =[]
-        for i in np.unique(labels):
-            """
+        
+        ulabels = np.unique(labels)
+        max_label = ulabels.max()
+        colors = plt_colors.ListedColormap(custom_cmap)(ulabels / (max_label if max_label > 0 else 1))
+        colors[ulabels < 0] = 0
+        self.map.colors = o3d.utility.Vector3dVector(colors[:, :3])
+        o3d.visualization.draw_geometries([map])
+        #pcd_list = []
+        #densities =[]
+        #for i in np.unique(labels):
+        """
             #The code iterates over the unique labels in the labels array using the np.unique function. This loop allows us to process each cluster separately.
             """
-            """
+        """
             #For each unique label, the code retrieves the corresponding points from the original point cloud (self.map) using boolean indexing. The condition labels == i selects the points belonging to the current cluster label.
             """
+        """
             points = np.asarray(self.map.points)[labels == i]
             density = len(points) / np.max(points)
             densities.append(density)
             pcd_cluster = o3d.geometry.PointCloud()
             pcd_cluster.points = o3d.utility.Vector3dVector(points)
             pcd_list.append(pcd_cluster)
+        """    
         """
         #Finally, the ground variable is assigned the first element of pcd_list, which represents the ground point cloud, and the crops variable is assigned the remaining elements of pcd_list, which represent the individual crop point clouds.
         #visualize each point cloud
@@ -128,7 +162,7 @@ pcd_cluster.colors = o3d.utility.Vector3dVector(pcd_colors)"""  # Example colori
     
         # Visualize the point cloud with density labels
         #o3d.visualization.draw_geometries([pcd_cluster])        
-        self.ground = pcd_list[0]
+        #self.ground = pcd_list[0]
         #print("number of colors:",ground.colors)
 
         #crops = pcd_list[1:]
@@ -240,6 +274,7 @@ if __name__ == """__main__""":
     #pcd.conditionPointcloud()
     #pcd.downsample
     #print(pcd)
+    lai_,leaf_nitrogen_con,exg_green,ndi = index_cal()
     point_cloud= np.loadtxt("E:/point_finalize/Map1/"+"points.xyz",skiprows=1,delimiter=',')
     pcd = o3d.geometry.PointCloud()
     pcd.points = o3d.utility.Vector3dVector(point_cloud[:,:3])
@@ -252,7 +287,7 @@ if __name__ == """__main__""":
     #print("volume is:",crop.volume)
     #i need to make sure the unit measure ment for the point cloud 
     crop.measureHeight()
-    print("Height is :",crop.height)
+    print("Height is (point/meter) :",crop.height)
     #measure bounds
     crop.getPosition()
     print("position:",crop.position)
@@ -262,16 +297,18 @@ if __name__ == """__main__""":
 
     analysis.calculateDensity()
     analysis.calculateAverageHeight()
-    print("density of point cloud:",analysis.density)
+    print("density of point cloud (point/meter):",analysis.density)
     print("average Height:",analysis.average_height)
     
     #pcd.observeCloud()
-    o3d.visualization.draw_geometries([pcd])
+    #o3d.visualization.draw_geometries([pcd])
 
     #clustering
     clus = PointcloudSet()
     clus.addPointclouds(pcd)
     clus.findCropsDBSCAN()
+
+    solution = prompt_design(analysis.average_height,analysis.density,lai_,leaf_nitrogen_con,exg_green,ndi)
     #o3d.visualization.draw_geometries([clus.ground])
     mydb = mysql.connector.connect(
     host="127.0.0.1",
@@ -289,6 +326,26 @@ if __name__ == """__main__""":
     height = ("Height",round(analysis.average_height,3))
     mycursor.execute(sql2, height)
     print(mycursor.rowcount, "Height record inserted.")
+
+    sql3 = "INSERT INTO parameter (Para_type, Value) VALUES (%s,%s)"
+    LNC = ("leaf nitrogen concentration",round(leaf_nitrogen_con,3))
+    mycursor.execute(sql3, LNC)
+    print(mycursor.rowcount, "LNC record inserted.")
+
+    sql4 = "INSERT INTO parameter (Para_type, Value) VALUES (%s,%s)"
+    NDI = ("NDI",round(ndi,3))
+    mycursor.execute(sql4, NDI)
+    print(mycursor.rowcount, "NDI record inserted.")
+
+    sql5 = "INSERT INTO parameter (Para_type, Value) VALUES (%s,%s)"
+    exg = ("excess of green",round(exg_green,3))
+    mycursor.execute(sql5, exg)
+    print(mycursor.rowcount, "exg record inserted.")
+
+    sql6 = "INSERT INTO parameter (Para_type, Value) VALUES (%s,%s)"
+    LAI = ("LAI",round(lai_,3))
+    mycursor.execute(sql6, LAI)
+    print(mycursor.rowcount, "LAI record inserted.")
     mydb.commit()
 
     print(mycursor.rowcount, "record inserted.")
