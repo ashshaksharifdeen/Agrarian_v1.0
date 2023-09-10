@@ -168,6 +168,11 @@ Install the packages that used here
 ```bash
    pip install -r requirements.txt
 ```
+In order to run the docker image
+```bash
+   docker run -p 5000:5000 pointcloud-app
+```
+
 
 
 
