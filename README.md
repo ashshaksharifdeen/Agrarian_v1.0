@@ -162,7 +162,11 @@ Build Docker Image for Image Proccessing
 ```bash
   docker build -t pointcloud-app .
 ```
-    
+Install Open3d you need a python version between 3.6 -3.10
+```bash
+  pip install open3d 
+```
+
 
 
 
