@@ -155,5 +155,15 @@ Further Improvements
 We haven't built the drone yet because of the current state of affairs in our country. We did, however, rent a drone and film some footage of an agricultural paddy field. The parameters are then obtained by applying our image processing algorithm to it. To improve our performance in the future, we must use a comprehensive deeplearning algorithm, build our drone, create an environment to connect farmers with plant consultants, and implement datascience techniques to provide farmers with our solutions based on the parameters we receive.
 
 
+## Installation
+
+Build Docker Image for Image Proccessing
+
+```bash
+  docker build -t pointcloud-app .
+```
+    
+
+
 
 
