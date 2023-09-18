@@ -1,0 +1,14 @@
+Pillow
+mysql
+numpy
+pathlib 
+open3d
+matplotlib
+opencv-python
+scikit-image
+imutils
+scipy
+Langchain
+streamlit
+openai
+-e .

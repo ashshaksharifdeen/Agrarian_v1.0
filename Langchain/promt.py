@@ -1,6 +1,6 @@
 ## Integrate our code OpenAI API
 import os
-from constants import openai_key
+from Langchain.constants import openai_key
 from langchain.llms import OpenAI
 from langchain import PromptTemplate
 from langchain.chains import LLMChain
@@ -8,8 +8,9 @@ from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 
 from langchain.chains import SequentialChain
+import json
 
-from video_foot import index_cal
+#from video_foot import index_cal
 
 import streamlit as st
 
@@ -31,14 +32,14 @@ def prompt_design(average_height,density,lai_,leaf_nitrogen_con,exg_green,ndi):
 
 # Memory
 
-    paddyfeild_memory = ConversationBufferMemory(input_key='name', memory_key='chat_history')
-    dob_memory = ConversationBufferMemory(input_key='result', memory_key='soultion_history')
+    #paddyfeild_memory = ConversationBufferMemory(input_key='name', memory_key='chat_history')
+    #dob_memory = ConversationBufferMemory(input_key='result', memory_key='soultion_history')
 
 
 ## OPENAI LLMS
     llm=OpenAI(temperature=0.8)
     chain=LLMChain(
-    llm=llm,prompt=first_input_prompt,verbose=True,output_key='result',memory=paddyfeild_memory)
+    llm=llm,prompt=first_input_prompt,verbose=True,output_key='result')
 
 # Prompt Templates
 
@@ -48,13 +49,13 @@ def prompt_design(average_height,density,lai_,leaf_nitrogen_con,exg_green,ndi):
 )
 
     chain2=LLMChain(
-    llm=llm,prompt=second_input_prompt,verbose=True,output_key='solution',memory=dob_memory)
+    llm=llm,prompt=second_input_prompt,verbose=True,output_key='solution')
 # Prompt Templates
 
     parent_chain=SequentialChain(
-    chains=[chain,chain2],input_variables=['LAI','NDI','LNC'],output_variables=['result','solution'],verbose=True)
+    chains=[chain,chain2],input_variables=['LAI','NDI','LNC','Density','Height'],output_variables=['result','solution'],verbose=True)
 
-    solution = parent_chain.run({
+    solution = parent_chain({
     'LAI': round(lai_,3),
     'NDI': round(ndi,3),
     "LNC": round(leaf_nitrogen_con,3),
@@ -63,6 +64,7 @@ def prompt_design(average_height,density,lai_,leaf_nitrogen_con,exg_green,ndi):
 
     })
 
+    #solution=parent_chain({'LAI':9.04,'NDI':0.25,'LNC':2.5,'Density':6.13,'Height':2.53})
     return solution
 
 
@@ -74,3 +76,17 @@ def prompt_design(average_height,density,lai_,leaf_nitrogen_con,exg_green,ndi):
 
     with st.expander('Solutions'): 
         st.info(dob_memory.buffer)"""
+
+"""if __name__ == '__main__':
+
+    #solution = parent_chain({'LAI':input_text,'NDI':input_text,'LNC':input_text})
+    average_height =9.04
+    density=0.25
+    lai_=2.5
+    leaf_nitrogen_con=6.13
+    exg_green =2.53
+    ndi =2.5
+    sol = prompt_design(average_height,density,lai_,leaf_nitrogen_con,exg_green,ndi)
+    json_ob = json.dumps(sol[0])
+    print("solution:",json_ob)
+"""
