@@ -107,7 +107,6 @@ Scalability: A truly innovative solution is capable of being scaled up and repli
 ## How It is different from other solutions available
 
 
-	
 cost-effectiveness: Our solution is significantly less expensive than the others because it does not necessitate the purchase and maintenance of expensive equipment such as satellites or specialized cameras. To use satellite imagery, we need a subscription of $3000 USD for daily updates, a multispectral camera that costs more than $3000 USD but can provide multiple band images, and a LAI canopy analyzer that costs $300 USD. The use of autonomous drone technology eliminates the need for human labor, lowering costs even further.
 
 Monitoring in real time: Our solution provides farmers with real-time information about plant health conditions, allowing them to make informed decisions quickly. Satellite imagery and multi-spectral camera solutions, on the other hand, provide only periodic snapshots of crop health and can be subject to delays.
@@ -122,34 +121,25 @@ In summary, our solution stands out from the crowd due to its unique combination
 
 
 
+#### Image processing: 
 
-our solution involves a range of technologies, including image processing, numpy, pandas, image segmentation, thresholding, Flutter for mobile development, Firestore for cloud data storage, and ROS for drone development. Here's a brief overview of these technologies and how they are used in your solution:
+This refers to the use of algorithms to analyze digital images and extract information from them. In our solution, image processing is used to analyze the RGB camera images captured by the drone and extract parameters such as LAI, leaf nitrogen concentration, NDI, and excess of green.Utilized diverse image processing techniques such as thresholding, image overlaying, and color space conversion from RGB to LAB. 
 
-Image processing: This refers to the use of algorithms to analyze digital images and extract information from them. In your solution, image processing is used to analyze the RGB camera images captured by the drone and extract parameters such as LAI, leaf nitrogen concentration, NDI, and excess of green.
+#### Numpy and Pandas: 
+These are Python libraries used for scientific computing and matrix manipulation. In our solution, these libraries are used to process the data extracted from the drone images and calculate the various plant health parameters.
 
-Numpy and Pandas: These are Python libraries used for scientific computing and data analysis. In your solution, these libraries are used to process the data extracted from the drone images and calculate the various plant health parameters.
+#### Image segmentation and thresholding:
 
-Image segmentation and thresholding: These are image processing techniques used to separate the image into different regions and thresholding is used to convert the image into a binary image. In your solution, these techniques are used to separate the plant from the background and calculate the plant health parameters.
+These are image processing techniques used to separate the image into different regions and thresholding is used to convert the image into a binary image. In our solution, these techniques are used to separate the plant from the background and calculate the plant health parameters. dditionally, employed point cloud processing methods integrating classical machine learning and
+DBSCAN clustering algorithms wich will cluster planst point clouds based on Density Level.
 
-Flutter for mobile development: This is a framework for building mobile applications for Android and iOS platforms. In your solution, Flutter is used to develop a mobile application that provides real-time updates on the plant health parameters to the farmers.
-
-Firestore for cloud data storage: This is a cloud-based NoSQL database provided by Google. In your solution, Firestore is used to store the plant health parameter data for easy access by farmers and mentors.
-
-
-
-
-ROS for drone development: This is a framework for developing robot software. In our solution, ROS will be used to develop a drone that can capture high-quality images of the crops, process the images in real-time using image processing algorithms, and transmit the data to the cloud for storage and analysis.
+#### Database:
+Leveraged AWS services, including EC2, RDS, S3, and Docker, to build a robust project infrastructure.
 
 
 
 
-Our business model revolves around providing Autonomous drone monitoring services as a Robot as a Service (RaaS) to farmers involved in Rice Agriculture. Through our mobile app platform, farmers can easily book a time slot for us to come and monitor their paddy field, providing them with valuable insight into their plant health conditions. Our service is designed to be cost-effective, with farmers only needing to pay for the drone monitoring services.
 
-Moreover, farmers can use our platform to connect with agricultural consultants and mentors who can provide them with additional guidance and expertise. Our reports are available to be used as a reference for these consultations. In addition, we provide a platform for these connections to take place, taking a payment to connect farmers with mentors.
-
-Our target audience are the farmers involved in Rice Agriculture, and we plan to conduct product awareness sessions among them, along with digital and social media marketing campaigns. We will also conduct free services campaigns for a week to gain more traction and conduct product comparison campaigns to showcase the effectiveness and cost-effectiveness of our service.
-
-.
 
 
 ## Installation
