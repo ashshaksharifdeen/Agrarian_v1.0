@@ -57,7 +57,7 @@ Finally, our autonomous drone monitoring solution provides a cost-effective and 
 
 
 
-##How has Our Innoavtion helped to solve a problem
+#How has Our Innoavtion helped to solve a problem
 
 
 
@@ -78,7 +78,7 @@ Our solution is a comprehensive and innovative approach to meeting the needs of 
 
 
 
-##Innovative of the Problem
+#Innovative of the Problem
 
 There are several methods for determining whether our solution is innovative:
 
@@ -104,7 +104,7 @@ Scalability: A truly innovative solution is capable of being scaled up and repli
 
 
 
-##How It is different from other solutions available
+#How It is different from other solutions available
 
 
 	
@@ -118,7 +118,7 @@ Accessibility: Our solution is extremely user-friendly, as it is suitable for fa
 
 In summary, our solution stands out from the crowd due to its unique combination of cost-effectiveness, real-time monitoring, portability, Visulize and accessibility. The use of autonomous drone technology and mobile applications provides farmers with a powerful tool for improving crop management practices and increasing crop yield.
 
-##Technology used
+#Technology used
 
 
 
